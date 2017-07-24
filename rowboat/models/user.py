@@ -86,6 +86,16 @@ class User(BaseModel):
     def __unicode__(self):
         return u'{}#{}'.format(self.username, str(self.discriminator).zfill(4))
 
+    def serialize(self):
+        return {
+            'id': self.user_id,
+            'username': self.username,
+            'discriminator': self.discriminator,
+            'avatar_url': self.get_avatar_url(),
+            'bot': self.bot,
+            'admin': self.admin,
+        }
+
 
 @BaseModel.register
 class Infraction(BaseModel):

@@ -134,6 +134,20 @@ class Guild(BaseModel):
         for ban in bans.values():
             GuildBan.ensure(guild, ban.user, ban.reason)
 
+    def serialize(self):
+        return {
+            'id': self.guild_id,
+            'owner_id': self.owner_id,
+            'name': self.name,
+            'icon': self.icon,
+            'splash': self.splash,
+            'region': self.region,
+            'config': self.config,
+            'config_raw': unicode(self.config_raw) if self.config_raw else yaml.safe_dump(self.config),
+            'enabled': self.enabled,
+            'whitelist': self.whitelist,
+        }
+
 
 @BaseModel.register
 class GuildEmoji(BaseModel):
