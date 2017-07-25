@@ -4,7 +4,7 @@ from requests_oauthlib import OAuth2Session
 from rowboat.models.user import User
 from rowboat.util.decos import authed
 
-auth = Blueprint('auth', __name__, url_prefix='/auth')
+auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 
 def token_updater(token):
@@ -26,7 +26,7 @@ def make_discord_session(token=None, state=None, scope=None):
         token_updater=token_updater)
 
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['POST'])
 @authed
 def auth_logout():
     g.user = None
@@ -63,9 +63,5 @@ def auth_discord_callback():
     if not user:
         return 'Unknown User', 403
 
-    # if not user.admin:
-    #     return 'Invalid User', 403
-
     g.user = user
-
     return redirect('/')

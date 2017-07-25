@@ -1,7 +1,7 @@
 import { h, render, Component } from 'preact';
 import PageHeader from './page_header';
 import GuildsTable from './guilds_table';
-import state from '../state';
+import {state} from '../state';
 
 
 class DashboardGuildsList extends Component {
@@ -11,10 +11,8 @@ class DashboardGuildsList extends Component {
   }
 
   componentWillMount() {
-    state.withUser((user) => {
-      user.getGuilds((guilds) => {
-        this.setState({guilds});
-      });
+    state.user.getGuilds((guilds) => {
+      this.setState({guilds});
     });
   }
 
