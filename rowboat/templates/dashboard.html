@@ -94,14 +94,14 @@
                 <td>{{ guild.name }}</td>
                 <td>
                   <a href="/guilds/{{ guild.guild_id }}">
-                    <button type="button" class="btn btn-success btn-circle"><i class="fa fa-info"></i></button>
+                    <button type="button" class="btn btn-success"style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;"><i class="fa fa-info"></i> Info</button>
                   </a>
                   <a href="/guilds/{{ guild.guild_id }}/config">
-                    <button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-info" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;"><i class="fa fa-edit"></i> Edit</button>
                   </a>
                   {% if g.user.admin %}
-                  <a id="delete-guild" class="btn btn-danger btn-circle" data-guild-id="{{ guild.guild_id }}">
-                    <i class="fa fa-trash"></i>
+                  <a id="delete-guild" class="btn btn-danger" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;" data-guild-id="{{ guild.guild_id }}">
+                    <i class="fa fa-trash"></i> Delete
                   </a>
                   {% endif %}
                 </td>
@@ -121,6 +121,7 @@
       </div>
       <!-- /.panel-heading -->
       <div class="panel-body">
+	    <a id="restart" class="btn btn-warning btn-block">Restart db</a>
         <a id="deploy" class="btn btn-success btn-block">Deploy</a>
       </div>
       <!-- /.panel-body -->
@@ -142,6 +143,17 @@
     });
   });
 
+  $("#restart").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "/api/restart"
+    }).done(function (event) {
+      notify('success', 'Restarting');
+    }).fail(function (event) {
+      notify('danger', 'Failed to Restart');
+    });
+  });
+  
   $("#delete-guild").click(function () {
     $.ajax({
       type: "DELETE",

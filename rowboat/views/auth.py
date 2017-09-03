@@ -30,7 +30,9 @@ def make_discord_session(token=None, state=None, scope=None):
 @authed
 def auth_logout():
     g.user = None
-    return jsonify({})
+    return '<!DOCTYPE HTML><html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="refresh" content="1; url=http://row.swvn9.net"> <script type="text/javascript">window.location.href="http://row.swvn9.net" </script> <title>Page Redirection</title> </head> <body> If you are not redirected automatically, follow this <a href="http://row.swvn9.net">link</a>. </body></html>'
+    #return '<meta http-equiv="refresh" content="0; url=http://row.swvn9.net" />'
+    #return jsonify({})
 
 
 @auth.route('/discord')

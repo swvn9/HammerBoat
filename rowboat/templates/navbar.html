@@ -1,10 +1,10 @@
 {% if g.user %}
 <div class="navbar-header">
-  <a class="navbar-brand">Rowboat</a>
+  <a class="navbar-brand">HammerBoat | Rowboat clone</a>
 </div>
 
 <ul class="nav navbar-top-links navbar-right">
-  <li class="dropdown">
+  <!--<li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
       <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
     </a>
@@ -23,14 +23,15 @@
         </li>
       {% endfor %}
     </ul>
-  </li>
+  </li>-->
+  <a class="navbar-text">Welcome, <strong>{{ user.username }}</strong></a>
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
       <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
     </a>
-    <ul class="dropdown-menu dropdown-user">
-      <li><a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-      </li>
+    <ul class="dropdown-menu dropdown-user" style="padding-bottom: 10px !important;">
+		<li class="disabled"><a>Logged in as {{ user.username }}#{{ user.discriminator }}<br/><a style="color: #888;">{{ user.user_id }}</a></a></li>
+		<li><a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
     </ul>
   </li>
 </ul>

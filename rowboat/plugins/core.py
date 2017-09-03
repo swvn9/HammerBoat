@@ -289,7 +289,7 @@ class CorePlugin(Plugin):
         try:
             yield embed
             self.bot.client.api.channels_messages_create(
-                290924692057882635 if ENV == 'prod' else 301869081714491393,
+                351794308254269441 if ENV == 'prod' else 351794308254269441,
                 '',
                 embed=embed
             )
@@ -471,7 +471,8 @@ class CorePlugin(Plugin):
                 except:
                     Command.track(event, command, exception=True)
                     self.log.exception('Command error:')
-                    return event.reply('<:{}> something went wrong, perhaps try again later'.format(RED_TICK_EMOJI))
+#                    return event.reply('<:{}> something went wrong, perhaps try again later'.format(RED_TICK_EMOJI))
+                    return
 
             Command.track(event, command)
 

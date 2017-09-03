@@ -32,6 +32,7 @@ class User(BaseModel):
     @property
     def id(self):
         return self.user_id
+		
 
     @classmethod
     def ensure(cls, user, should_update=True):

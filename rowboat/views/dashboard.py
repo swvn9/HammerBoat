@@ -94,6 +94,16 @@ def archive(aid, fmt):
     res.headers['Content-Type'] = mime_type
     return res
 
+@dashboard.route('/api/restart', methods=['POST'])
+@authed
+def restart():
+    if not g.user.admin:
+        return '', 401
+
+    rdb.publish('actions', json.dumps({
+        'type': 'RESTART',
+    }))
+    return '', 200
 
 @dashboard.route('/api/deploy', methods=['POST'])
 @authed

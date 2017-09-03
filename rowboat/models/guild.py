@@ -2,7 +2,7 @@ import yaml
 import logging
 
 from peewee import (
-    BigIntegerField, CharField, TextField, BooleanField, DateTimeField, CompositeKey, BlobField
+    BigIntegerField, CharField, TextField, BooleanField, DateTimeField, CompositeKey, BlobField, ForeignKeyField
 )
 from holster.enum import Enum
 from datetime import datetime
@@ -29,7 +29,6 @@ class Guild(BaseModel):
     icon = TextField(null=True)
     splash = TextField(null=True)
     region = TextField(null=True)
-
     last_ban_sync = DateTimeField(null=True)
 
     # Rowboat specific data
