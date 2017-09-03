@@ -1,4 +1,3 @@
-
 from disco.bot import CommandLevels
 from disco.util.sanitize import S
 from disco.types.message import MessageEmbed
