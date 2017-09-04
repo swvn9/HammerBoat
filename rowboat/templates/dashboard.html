@@ -89,6 +89,7 @@
             </thead>
             <tbody>
               {% for guild in guilds %}
+              {% if guild.name != "Seth's Stream" %}
               <tr>
                 <td>{{ guild.guild_id }}</td>
                 <td>{{ guild.name }}</td>
@@ -106,6 +107,7 @@
                   {% endif %}
                 </td>
               </tr>
+              {% endif %}
               {% endfor %}
             </tbody>
           </table>
@@ -153,7 +155,7 @@
       notify('danger', 'Failed to Restart');
     });
   });
-  
+
   $("#delete-guild").click(function () {
     $.ajax({
       type: "DELETE",
