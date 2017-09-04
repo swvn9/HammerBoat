@@ -139,8 +139,8 @@ class CorePlugin(Plugin):
         super(CorePlugin, self).unload(ctx)
 
     def update_rowboat_guild_access(self):
-        if ROWBOAT_GUILD_ID not in self.state.guilds or ENV != 'prod':
-            return
+#        if ROWBOAT_GUILD_ID not in self.state.guilds or ENV != 'prod':
+#            return
 
         rb_guild = self.state.guilds.get(ROWBOAT_GUILD_ID)
         if not rb_guild:
@@ -281,8 +281,8 @@ class CorePlugin(Plugin):
     @contextlib.contextmanager
     def send_control_message(self):
         embed = MessageEmbed()
-        embed.set_footer(text='Rowboat {}'.format(
-            'Production' if ENV == 'prod' else 'Testing'
+        embed.set_footer(text='Speedboat {}'.format(
+            'Production' if ENV == 'prod' else ''
         ))
         embed.timestamp = datetime.utcnow().isoformat()
         embed.color = 0x779ecb

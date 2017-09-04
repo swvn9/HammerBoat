@@ -94,6 +94,18 @@ def add_global_admin(user_id):
     print 'Ok, added {} as a global admin'.format(user_id)
 
 
+@cli.command('rmv-global-admin')
+@click.argument('user-id')
+def rmv_global_admin(user_id):
+    from rowboat.redis import rdb
+    from rowboat.models.user import User
+    init_db(ENV)
+    rdb.srem('global_admins', user_id)
+    User.update(admin=False).where(User.user_id == user_id).execute()
+    print 'Ok, removed {} as a global admin'.format(user_id)
+
+
+
 @cli.command('wh-add')
 @click.argument('guild-id')
 @click.argument('flag')
