@@ -105,7 +105,6 @@ class CorePlugin(Plugin):
                 continue
 
             data = json.loads(item['data'])
-            print data, data['id'], self.guilds
             if data['type'] == 'GUILD_UPDATE' and data['id'] in self.guilds:
                 with self.send_control_message() as embed:
                     embed.title = u'Reloaded config for {}'.format(
@@ -260,7 +259,7 @@ class CorePlugin(Plugin):
             guild.sync_bans(self.client.state.guilds.get(guild.guild_id))
 
     @Plugin.listen('GuildUpdate')
-    def on_guild_udpate(self, event):
+    def on_guild_update(self, event):
         self.log.info('Got guild update for guild %s (%s)', event.guild.id, event.guild.channels)
 
     @Plugin.listen('GuildMembersChunk')
