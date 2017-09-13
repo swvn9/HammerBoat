@@ -206,7 +206,8 @@ def guild_config_update(guild):
 
     role = data.get('web', {}).get(g.user.user_id) or data.get('web', {}).get(str(g.user.user_id))
     if guild.role != role:
-        return 'Cannot change your own permissions', 400
+        if g.user.admin != True:
+            return 'Cannot change your own permissions', 400
 
     try:
         guild.update_config(g.user.user_id, request.values.get('data'))
