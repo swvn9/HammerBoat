@@ -111,7 +111,8 @@ def deploy():
     if not g.user.admin:
         return '', 401
 
-    subprocess.Popen(['git', 'pull', 'origin', 'master']).wait()
+#    subprocess.Popen(['git', 'pull', 'origin', 'master']).wait()
+    subprocess.Popen(['git', 'pull']).wait()
     rdb.publish('actions', json.dumps({
         'type': 'RESTART',
     }))
