@@ -44,7 +44,7 @@ def with_guild(f):
 @guilds.route('/guilds/<gid>')
 @with_guild
 def guild_info(guild):
-    return render_template('guild_info.html', guild=guild)
+    return render_template('guild_info.html', guild=guild, User=user)
 
 
 @guilds.route('/api/guilds/<gid>', methods=['DELETE'])
@@ -205,7 +205,7 @@ def guild_config_update(guild):
         return 'Invalid Access', 403
 
     role = data.get('web', {}).get(g.user.user_id) or data.get('web', {}).get(str(g.user.user_id))
-    if guild.role != role:
+    if guild.role != role and not g.user.admin:
         if g.user.admin != True:
             return 'Cannot change your own permissions', 400
 

@@ -26,15 +26,15 @@
             <thead>
             </thead>
             <tbody>
-			  <tr>
+			        <tr>
                 <td>ID</td>
                 <td>{{ guild.guild_id }}</td>
               </tr>
-			  <tr>
+			        <tr>
                 <td>Owner</td>
-                <td>{{ user.with_id(guild.owner_id) }} ({{ guild.owner_id }})</td>
+                <td>{{ User.with_id(guild.owner_id) }} ({{ guild.owner_id }})</td>
               </tr>
-			  <tr>
+			        <tr>
                 <td>Region</td>
                 <td>{{ guild.region }}</td>
               </tr>
@@ -42,7 +42,7 @@
                 <td>Icon</td>
                 <td><img src="https://cdn.discordapp.com/icons/{{ guild.guild_id }}/{{ guild.icon}}.png" alt="No Icon"></td>
               </tr>
-			  <tr>
+			        <tr>
                 <td>Splash</td>
                 <td><img src="https://cdn.discordapp.com/splashes/{{ guild.guild_id }}/{{ guild.splash}}.png" alt="No Splash"></td>
               </tr>
