@@ -224,7 +224,8 @@ class UtilitiesPlugin(Plugin):
 
         content = []
         content.append(u'**\u276F Server Information**')
-
+        content.append(u'Name: {}'.format(guild.name))
+        content.append(u'ID: {}'.format(guild_id))
         created_at = to_datetime(guild.id)
         content.append(u'Created: {} ago ({})'.format(
             humanize.naturaldelta(datetime.utcnow() - created_at),
