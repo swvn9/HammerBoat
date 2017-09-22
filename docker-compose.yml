@@ -24,6 +24,7 @@ services:
     command: python manage.py serve -r
     volumes:
       - .:/opt/rowboat
+      - ~/.ssh:/root/.ssh
     ports:
       - "80:80"
     depends_on:
