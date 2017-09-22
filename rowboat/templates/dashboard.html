@@ -89,7 +89,6 @@
             </thead>
             <tbody>
               {% for guild in guilds %}
-              {% if guild.name != "Seth's Stream" %}
               <tr>
                 <td>{{ guild.guild_id }}</td>
                 <td>{{ guild.name }}</td>
@@ -101,16 +100,17 @@
                     <button type="button" class="btn btn-info" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;"><i class="fa fa-edit"></i> Edit</button>
                   </a>
                   <a href="/guilds/{{ guild.guild_id }}/infractions">
-                    <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-ban"></i></button>
+                    <button type="button" class="btn btn-warning btn-circle" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;"><i class="fa fa-ban"> Infractions</i></button>
                   </a>
+                  <!-- Delete button doesn't work, so it will be removed for now, or until I can figure out how to fix it
                   {% if g.user.admin %}
                   <a id="delete-guild" class="btn btn-danger" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;" data-guild-id="{{ guild.guild_id }}">
                     <i class="fa fa-trash"></i> Delete
                   </a>
                   {% endif %}
+                -->
                 </td>
               </tr>
-              {% endif %}
               {% endfor %}
             </tbody>
           </table>
