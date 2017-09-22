@@ -100,6 +100,9 @@
                   <a href="/guilds/{{ guild.guild_id }}/config">
                     <button type="button" class="btn btn-info" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;"><i class="fa fa-edit"></i> Edit</button>
                   </a>
+                  <a href="/guilds/{{ guild.guild_id }}/infractions">
+                    <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-ban"></i></button>
+                  </a>
                   {% if g.user.admin %}
                   <a id="delete-guild" class="btn btn-danger" style="height:25px;padding:0px 10px 0px 10px; text-size:12px; border-radius:20px;" data-guild-id="{{ guild.guild_id }}">
                     <i class="fa fa-trash"></i> Delete

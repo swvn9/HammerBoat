@@ -178,7 +178,7 @@ class UtilitiesPlugin(Plugin):
         except Message.DoesNotExist:
             return event.msg.reply(u"I've never seen {}".format(user))
 
-        event.msg.reply(u'I last saw {} {} ({})'.format(
+        event.msg.reply(u'I last saw {} {} ago (at {})'.format(
             user,
             humanize.naturaldelta(datetime.utcnow() - msg.timestamp),
             msg.timestamp
@@ -388,8 +388,12 @@ class UtilitiesPlugin(Plugin):
             (Reminder.remind_at < (datetime.utcnow() + timedelta(seconds=1)))
         )
 
+        waitables = []
         for reminder in reminders:
-            self.spawn(self.trigger_reminder)
+            waitables.append(self.spawn(self.trigger_reminder, reminder))
+
+        for waitable in waitables:
+            waitable.join()
 
         self.queue_reminders()
 
@@ -428,7 +432,7 @@ class UtilitiesPlugin(Plugin):
         finally:
             # Cleanup
             msg.delete_reaction(SNOOZE_EMOJI)
-            msg.delete_instance(GREEN_TICK_EMOJI)
+            msg.delete_reaction(GREEN_TICK_EMOJI)
 
         if mra_event.emoji.name == SNOOZE_EMOJI:
             reminder.remind_at = datetime.utcnow() + timedelta(minutes=20)
