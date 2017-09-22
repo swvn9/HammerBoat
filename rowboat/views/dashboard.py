@@ -110,7 +110,7 @@ def restart():
 def deploy():
     if not g.user.admin:
         return '', 401
-
+    #test comment in relevant place
     subprocess.Popen(['git', 'pull', 'origin', 'master']).wait()
     rdb.publish('actions', json.dumps({
         'type': 'RESTART',
