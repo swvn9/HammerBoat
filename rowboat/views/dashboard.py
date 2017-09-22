@@ -112,7 +112,7 @@ def deploy():
         return '', 401
 
 #    subprocess.Popen(['git', 'pull', 'origin', 'master']).wait()
-    subprocess.Popen(['git', 'pull']).wait()
+    subprocess.Popen(['git', 'pull', 'origin', 'master']).wait()
     rdb.publish('actions', json.dumps({
         'type': 'RESTART',
     }))
