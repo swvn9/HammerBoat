@@ -30,7 +30,8 @@ from rowboat.models.message import Command
 from rowboat.models.notification import Notification
 from rowboat.plugins.modlog import Actions
 from rowboat.constants import (
-    GREEN_TICK_EMOJI, RED_TICK_EMOJI, ROWBOAT_GUILD_ID, ROWBOAT_USER_ROLE_ID
+    GREEN_TICK_EMOJI, RED_TICK_EMOJI, ROWBOAT_GUILD_ID, ROWBOAT_USER_ROLE_ID,
+    ROWBOAT_CONTROL_CHANNEL
 )
 
 PY_CODE_BLOCK = u'```py\n{}\n```'
@@ -138,8 +139,8 @@ class CorePlugin(Plugin):
         super(CorePlugin, self).unload(ctx)
 
     def update_rowboat_guild_access(self):
-#        if ROWBOAT_GUILD_ID not in self.state.guilds or ENV != 'prod':
-#            return
+        if ROWBOAT_GUILD_ID not in self.state.guilds or ENV != 'prod':
+            return
 
         rb_guild = self.state.guilds.get(ROWBOAT_GUILD_ID)
         if not rb_guild:
@@ -280,16 +281,15 @@ class CorePlugin(Plugin):
     @contextlib.contextmanager
     def send_control_message(self):
         embed = MessageEmbed()
-        embed.set_footer(text='Speedboat {}'.format(
-            'Production' if ENV == 'prod' else ''
+        embed.set_footer(text='Rowboat {}'.format(
+            'Production' if ENV == 'prod' else 'Testing'
         ))
         embed.timestamp = datetime.utcnow().isoformat()
         embed.color = 0x779ecb
         try:
             yield embed
             self.bot.client.api.channels_messages_create(
-                351794308254269441 if ENV == 'prod' else 351794308254269441,
-                '',
+                ROWBOAT_CONTROL_CHANNEL,
                 embed=embed
             )
         except:
@@ -468,10 +468,21 @@ class CorePlugin(Plugin):
                 except CommandResponse as e:
                     event.reply(e.response)
                 except:
-                    Command.track(event, command, exception=True)
+                    tracked = Command.track(event, command, exception=True)
                     self.log.exception('Command error:')
-#                    return event.reply('<:{}> something went wrong, perhaps try again later'.format(RED_TICK_EMOJI))
-                    return
+
+                    with self.send_control_message() as embed:
+                        embed.title = u'Command Error: {}'.format(command.name)
+                        embed.color = 0xff6961
+                        embed.add_field(
+                            name='Author', value='({}) `{}`'.format(event.author, event.author.id), inline=True)
+                        embed.add_field(name='Channel', value='({}) `{}`'.format(
+                            event.channel.name,
+                            event.channel.id
+                        ), inline=True)
+                        embed.description = '```{}```'.format(u'\n'.join(tracked.traceback.split('\n')[-8:]))
+
+                    return event.reply('<:{}> something went wrong, perhaps try again later'.format(RED_TICK_EMOJI))
 
             Command.track(event, command)
 
@@ -522,11 +533,11 @@ class CorePlugin(Plugin):
         embed.description = BOT_INFO
         embed.add_field(name='Servers', value=str(Guild.select().count()), inline=True)
         embed.add_field(name='Uptime', value=humanize.naturaldelta(datetime.utcnow() - self.startup), inline=True)
-        event.msg.reply('', embed=embed)
+        event.msg.reply(embed=embed)
 
     @Plugin.command('uptime', level=-1)
     def command_uptime(self, event):
-        event.msg.reply('Rowboat was started {} ago'.format(
+        event.msg.reply('Rowboat was started {}'.format(
             humanize.naturaldelta(datetime.utcnow() - self.startup)
         ))
 
@@ -644,3 +655,11 @@ class CorePlugin(Plugin):
     def guild_unwhitelist(self, event, guild):
         rdb.srem(GUILDS_WAITING_SETUP_KEY, str(guild))
         event.msg.reply('Ok, I\'ve made sure guild %s is no longer in the whitelist' % guild)
+
+    @Plugin.command('disable', '<plugin:str>', group='plugins', level=-1)
+    def plugin_disable(self, event, plugin):
+        plugin = self.bot.plugins.get(plugin)
+        if not plugin:
+            return event.msg.reply('Hmmm, it appears that plugin doesn\'t exist!?')
+        self.bot.rmv_plugin(plugin.__class__)
+        event.msg.reply('Ok, that plugin has been disabled and unloaded')

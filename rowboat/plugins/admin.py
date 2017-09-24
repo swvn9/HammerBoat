@@ -1329,6 +1329,9 @@ class AdminPlugin(Plugin):
             raise CommandFail('you are already a member of that group')
 
         member.add_role(role)
+        if event.config.group_confirm_reactions:
+            event.msg.add_reaction(GREEN_TICK_EMOJI)
+            return
         raise CommandSuccess(u'you have joined the {} group'.format(name))
 
     @Plugin.command('leave', '<name:snowflake|str>', aliases=['remove', 'take'])
@@ -1345,6 +1348,9 @@ class AdminPlugin(Plugin):
             raise CommandFail('you are not a member of that group')
 
         member.remove_role(role_id)
+        if event.config.group_confirm_reactions:
+            event.msg.add_reaction(GREEN_TICK_EMOJI)
+            return
         raise CommandSuccess(u'you have left the {} group'.format(name))
 
     @Plugin.command('unlock', '<role_id:snowflake>', group='role', level=CommandLevels.ADMIN)
