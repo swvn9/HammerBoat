@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 body {
-	background-color: #333333 !important
+  background-color: #f8f8f8;
 }
 #wrapper {
   width: 100%;
@@ -75,10 +75,10 @@ body {
   padding: 15px;
 }
 .sidebar ul li {
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid #e7e7e7;
 }
 .sidebar ul li a.active {
-  background-color: #444;
+  background-color: #eeeeee;
 }
 .sidebar .arrow {
   float: right;

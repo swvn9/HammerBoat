@@ -199,7 +199,7 @@ class MessageArchive(BaseModel):
     @property
     def url(self):
         # TODO: use web endpoint here
-        return 'http://row.swvn9.net/archive/{}.txt'.format(self.archive_id)
+        return 'https://dashboard.rowboat.party/api/archive/{}.txt'.format(self.archive_id)
 
     def encode(self, fmt='txt'):
         from rowboat.models.user import User
