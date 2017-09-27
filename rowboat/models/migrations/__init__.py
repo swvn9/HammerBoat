@@ -2,7 +2,6 @@ import time
 import operator
 
 from playhouse.migrate import PostgresqlMigrator, migrate
-from rowboat import ENV
 from rowboat.sql import database, init_db
 
 COLUMN_EXISTS_SQL = '''
@@ -144,4 +143,4 @@ class Migrate(object):
             cls([lambda c: True], func).run()
         return deco
 
-init_db(ENV)
+init_db()
